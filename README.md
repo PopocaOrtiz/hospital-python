@@ -1,4 +1,4 @@
-# Hospital
+# Hospital server
 
 ## python + fastapi + mysql + docker
 
