@@ -1,2 +1,5 @@
-# hospital
-dumy project for practicing python-fastapi-react-docker-mysql
+# Hospital
+
+## python + fastapi + mysql + docker
+
+dumy project for practice
