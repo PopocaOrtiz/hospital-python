@@ -2,8 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from db import DB
-from query_builder_users import QueryBuilderUsers
+from app.db import DB
+from app.query_builder_users import QueryBuilderUsers
 
 app = FastAPI()
 app.add_middleware(

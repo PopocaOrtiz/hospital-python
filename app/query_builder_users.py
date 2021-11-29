@@ -1,7 +1,7 @@
 from typing import Tuple, Union
 from dataclasses import dataclass
 
-from db import DB
+from app.db import DB
 
 
 @dataclass
