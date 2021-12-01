@@ -80,6 +80,5 @@ def update_user(user_id: int, user: User):
     }
 
 
-
 if __name__ == '__main__':
     print(QueryBuilderUsers(1).get_one())
