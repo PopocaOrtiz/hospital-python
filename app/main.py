@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.db import DB
 from app.query_builder_users import QueryBuilderUsers
 from app.schemas import User
+from app.users import chain_users
 
 app = FastAPI()
 app.add_middleware(
@@ -15,9 +16,15 @@ app.add_middleware(
 )
 
 
+@app.get('/users/chain')
+async def get_chained_users():
+    return {
+        'users': list(chain_users())
+    }
+
+
 @app.get("/users")
 async def get_users():
-
     users = QueryBuilderUsers().get()
 
     return {
@@ -55,8 +62,7 @@ async def create_user(user: User):
 
 
 @app.put('/users/{user_id}')
-def update_user(user_id: int, user: User):
-
+async def update_user(user_id: int, user: User):
     sql = """
         update users
         set firstname = %(firstname)s,
