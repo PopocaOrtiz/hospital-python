@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
 
 from app.db import DB
 from app.query_builder_users import QueryBuilderUsers
+from app.schemas import User
 
 app = FastAPI()
 app.add_middleware(
@@ -33,12 +33,6 @@ async def get_user(user_id: int):
     return {
         'user': user
     }
-
-
-class User(BaseModel):
-    id: int
-    firstname: str
-    lastname: str
 
 
 @app.post('/users')
