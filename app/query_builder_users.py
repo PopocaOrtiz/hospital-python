@@ -13,10 +13,11 @@ class User:
 
 class QueryBuilderUsers:
 
-    def __init__(self, user_id: int = None, limit: int = None):
+    def __init__(self, user_id: int = None, limit: int = None, name_like: str = None):
         self.filters = {
             'user_id': user_id,
-            'limit': limit
+            'limit': limit,
+            'name_like': name_like
         }
 
     def prepare_query(self) -> Tuple[str, dict]:
@@ -27,10 +28,23 @@ class QueryBuilderUsers:
         params = {}
 
         if self.filters['user_id']:
-            sql = """
+            sql += """
                 and id = %(user_id)s
             """
             params['user_id'] = self.filters['user_id']
+
+        if self.filters['name_like']:
+            name_like = f"%{self.filters['name_like']}"
+
+            sql += """
+                and (
+                    firstname like %(name_like)s
+                    or
+                    lastname like %(name_like)s
+                )
+            """
+
+            params['name_like'] = name_like
 
         if self.filters['limit']:
             sql += """
@@ -44,12 +58,13 @@ class QueryBuilderUsers:
 
         sql, params = self.prepare_query()
 
-        sql = """
+        sql = f"""
             select
                 id,
                 firstName,
                 lastName 
             from users
+            {sql}
         """
 
         db = DB()

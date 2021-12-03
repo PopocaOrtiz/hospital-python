@@ -1,3 +1,5 @@
+from typing import Optional
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -24,8 +26,8 @@ async def get_chained_users():
 
 
 @app.get("/users")
-async def get_users():
-    users = QueryBuilderUsers().get()
+async def get_users(name: Optional[str] = None) -> dict:
+    users = QueryBuilderUsers(name_like=name).get()
 
     return {
         'users': users
